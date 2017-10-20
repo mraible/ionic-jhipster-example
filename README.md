@@ -1,4 +1,4 @@
-## Ionic in JHipster 💥
+## Ionic + JHipster 💥
 
 This repository consists of an example Ionic application that works with JHipster's backend. The only thing that's currently working is JWT authentication. Work on the others will developer with time.
 
@@ -6,12 +6,10 @@ To run this example, complete the following steps, run the JHipster backend firs
 
 ```
 cd jhipster-jwt-backend
-npm install
 ./mvnw
 ```
 
-Then run the Ionic frontend:
-
+Then run the Ionic frontend in another terminal window:
 
 ```
 cd ionic-jhipster-example
@@ -20,4 +18,8 @@ npm install
 ionic serve
 ```
 
-Login to <http://localhost:8100> and explore!
+Navigate to <http://localhost:8100>, login with `admin/admin` and explore!
+
+## TODO
+
+There is no entity generator integration at this point, but if you click on "Entities", you'll see what my vision is. 

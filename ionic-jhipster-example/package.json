@@ -31,8 +31,7 @@
     "zone.js": "0.8.18",
     "@ionic-native/camera": "4.3.1",
     "@ngx-translate/core": "8.0.0",
-    "@ngx-translate/http-loader": "^2.0.0",
-    "ng-jhipster": "0.1.16"
+    "@ngx-translate/http-loader": "^2.0.0"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.0.0",
