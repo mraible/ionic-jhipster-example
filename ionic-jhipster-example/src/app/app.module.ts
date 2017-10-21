@@ -13,14 +13,12 @@ import { Items } from '../mocks/providers/items';
 import { Api, Settings, User } from '../providers/providers';
 import { MyApp } from './app.component';
 import { LoginService } from '../providers/auth/login.service';
-import { JhiLanguageService, NgJhipsterModule } from 'ng-jhipster';
-import { JhiConfigService } from 'ng-jhipster/src/config.service';
-import { JhiModuleConfig } from 'ng-jhipster/src/config';
+import { NgJhipsterModule } from 'ng-jhipster';
 import { Principal } from '../providers/auth/principal.service';
 import { AccountService } from '../providers/auth/account.service';
 import { HttpModule } from '@angular/http';
 import { AuthServerProvider } from '../providers/auth/auth-jwt.service';
-import { LocalStorageService, SessionStorageService } from 'ng2-webstorage/dist/services';
+import { LocalStorageService, SessionStorageService } from 'ng2-webstorage';
 import { AuthInterceptor } from '../providers/auth/auth-interceptor';
 import { EntityPageModule } from "../pages/entities/entity.module";
 
@@ -63,6 +61,12 @@ export function provideSettings(storage: Storage) {
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     EntityPageModule,
+    NgJhipsterModule.forRoot({
+      // set below to true to make alerts look like toast
+      alertAsToast: false,
+      i18nEnabled: true,
+      defaultI18nLang: 'en'
+    }),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -73,9 +77,6 @@ export function provideSettings(storage: Storage) {
     Items,
     User,
     LoginService,
-    JhiLanguageService,
-    JhiConfigService,
-    JhiModuleConfig,
     Principal,
     AccountService,
     AuthServerProvider,
