@@ -35,10 +35,16 @@
   "SETTINGS_OPTION2": "Option 2",
   "SETTINGS_OPTION3": "Option 3",
   "SETTINGS_OPTION4": "Option 4",
+  
+  "SETTINGS_AUTHENTICATION_TYPE": "Authentication Type",
 
   "SETTINGS_PROFILE_BUTTON": "Edit Profile",
+  
+  "SETTINGS_PASSWORD_BUTTON": "Change Password",
 
   "SETTINGS_PAGE_PROFILE": "Edit Profile",
+  
+  "SETTINGS_PAGE_PASSWORD": "Change Password",
 
   "WELCOME_TITLE": "Welcome",
 

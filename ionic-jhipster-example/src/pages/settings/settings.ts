@@ -56,6 +56,8 @@ export class SettingsPage {
           option4: [this.options.option4]
         };
         break;
+      case 'password':
+        break;
     }
     this.form = this.formBuilder.group(group);
 

@@ -62,7 +62,6 @@ export function provideSettings(storage: Storage) {
     IonicStorageModule.forRoot(),
     EntityPageModule,
     NgJhipsterModule.forRoot({
-      // set below to true to make alerts look like toast
       alertAsToast: false,
       i18nEnabled: true,
       defaultI18nLang: 'en'
