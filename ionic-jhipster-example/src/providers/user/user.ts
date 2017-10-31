@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Api } from '../api/api';
 import { LoginService } from '../auth/login.service';
 import { Observable } from 'rxjs/Observable';
+import { HttpHeaders } from '@angular/common/http';
 
 /**
  * Most apps have the concept of a User. This is a simple provider
@@ -45,12 +46,15 @@ export class User {
     });
   }
 
-  /**
+   /**
    * Send a POST request to our signup endpoint with the data
    * the user entered on the form.
    */
   signup(accountInfo: any) {
-    return this.api.post('register', accountInfo).share();
+    return this.api.post('register', accountInfo, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      responseType: 'text'
+    }).share();
   }
 
   /**
