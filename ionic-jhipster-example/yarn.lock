@@ -75,6 +75,10 @@
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/core/-/core-4.3.0.tgz#0d613bb6c8779146949514299ca1c02611e308a9"
 
+"@ionic-native/facebook@^4.3.2":
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/@ionic-native/facebook/-/facebook-4.3.2.tgz#36cdef8c343dea3782c4d550eb2f2abd8fb7ede8"
+
 "@ionic-native/splash-screen@4.3.0":
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/splash-screen/-/splash-screen-4.3.0.tgz#9deb07afcf1059807233aa7d90d6e441f6ecb372"
@@ -727,6 +731,10 @@ cookie-signature@1.0.6:
 cookie@0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
+
+cordova-plugin-facebook4@^1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-facebook4/-/cordova-plugin-facebook4-1.9.1.tgz#60acb3a026b5eaceb1160e97ab28be6c68192e4f"
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"

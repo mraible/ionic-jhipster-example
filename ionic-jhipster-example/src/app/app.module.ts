@@ -1,3 +1,4 @@
+import { Facebook } from '@ionic-native/facebook';
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -91,7 +92,8 @@ export function provideSettings(storage: Storage) {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
+    Facebook
   ]
 })
 export class AppModule { }

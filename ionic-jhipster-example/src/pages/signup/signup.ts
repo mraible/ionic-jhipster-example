@@ -1,3 +1,4 @@
+import { LoginService } from './../../providers/auth/login.service';
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
@@ -14,14 +15,19 @@ export class SignupPage {
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
-  account: { login: string, email: string, firstName: string, lastName: string, password: string, langKey: string } = {
+  account: { login: string, email: string, firstName: string, lastName: string, password: string, langKey: string, imageUrl: string } = {
     login: '',
     email: '',
     firstName: '',
     lastName: '',
     password: '',
-    langKey: 'en'
+    langKey: 'en',
+    imageUrl: ''
   };
+
+  accountLoginFb: { username: string, password: string };
+
+  toast;
 
   // Our translated text strings
   private signupErrorString: string;
@@ -29,7 +35,8 @@ export class SignupPage {
   constructor(public navCtrl: NavController,
     public user: User,
     public toastCtrl: ToastController,
-    public translateService: TranslateService) {
+    public translateService: TranslateService,
+    public loginService: LoginService) {
 
     this.translateService.get('SIGNUP_ERROR').subscribe((value) => {
       this.signupErrorString = value;
@@ -56,4 +63,88 @@ export class SignupPage {
       toast.present();
     });
   }
+
+
+  doSignUpFacebook() {
+
+    this.user.loginFacebook()
+      .then((res) => {
+
+        this.user.accessFacebookApi()
+          .then((res) => {
+
+            this.account = {
+              login: res.email,
+              email: res.email,
+              firstName: res.name,
+              lastName: '',
+              password: this.user._userFBId,
+              langKey: 'en',
+              imageUrl: res.picture.data.url
+            };
+
+            console.log('Accessing api! ->' + JSON.stringify(res));
+
+            this.user.registerFacebookMobile(this.account)
+              .subscribe(
+              (res) => {
+
+                this.doLogin(this.user._userFBId);
+
+              },
+              (err) => {
+                console.log('err fail-->' + JSON.stringify(err));
+                // Unable to sign up
+                this.presentToastMessage('Facebook registry failed');
+
+              }
+              );
+          })
+          .catch((err) => {
+            console.log('err fail-->' + JSON.stringify(err));
+            // Unable to sign up
+            this.presentToastMessage('Facebook registry failed');
+          });
+
+      })
+      .catch((err) => {
+        console.log('err fail-->' + JSON.stringify(err));
+        // Unable to sign up
+        this.presentToastMessage('Facebook registry failed');
+      })
+
+
+
+  }
+
+  doLogin(userId) {
+    
+        this.accountLoginFb = {
+          username: this.account.login,
+          password: userId
+        };
+    
+        this.loginService.login(this.accountLoginFb).then((response) => {
+          console.log('response: ' + response);
+          this.navCtrl.setRoot(MainPage);
+        }, (err) => {
+    
+          console.log('err fail-->' + JSON.stringify(err));
+          // Unable to sign up
+          this.account.password = '';
+          this.presentToastMessage('Facebook registry failed - login fail');
+         
+        });
+      }
+
+  presentToastMessage(message) {
+    
+        this.toast = this.toastCtrl.create({
+          message: message,
+          showCloseButton: true,
+          position: 'top'
+        });
+        this.toast.present();
+      }
+
 }

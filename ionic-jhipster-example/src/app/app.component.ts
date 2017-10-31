@@ -1,3 +1,4 @@
+import { AuthServerProvider } from './../providers/auth/auth-jwt.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -45,12 +46,21 @@ export class MyApp {
 
   constructor(private translate: TranslateService, platform: Platform, settings: Settings, private config: Config,
               private statusBar: StatusBar, private splashScreen: SplashScreen, private principal: Principal,
-              private app: App) {
+              private app: App, private authServerProvider: AuthServerProvider) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      const token = this.authServerProvider.getToken();
+      console.log('token-->'+token);
+      if(token){
+        this.rootPage = MainPage;
+        this.authServerProvider.loginWithToken(token,true);
+       
+      }
+
     });
     this.initTranslate();
   }
