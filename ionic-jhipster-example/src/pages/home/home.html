@@ -3,6 +3,10 @@
     <ion-title>
       Welcome, {{account?.firstName}}!
     </ion-title>
+    <ion-avatar item-right *ngIf="account?.imageUrl">
+      
+      <img src="{{account?.imageUrl}}">
+  </ion-avatar>
     <ion-buttons end>
       <button ion-button (click)="logout()">
         Logout

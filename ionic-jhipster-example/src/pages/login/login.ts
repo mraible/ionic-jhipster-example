@@ -1,3 +1,5 @@
+import { FacebookLoginResponse } from '@ionic-native/facebook';
+import { User } from './../../providers/user/user';
 import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IonicPage, NavController, ToastController } from 'ionic-angular';
@@ -18,13 +20,16 @@ export class LoginPage {
     password: ''
   };
 
+  toast;
+
   // Our translated text strings
   private loginErrorString: string;
 
   constructor(public navCtrl: NavController,
     public loginService: LoginService,
     public toastCtrl: ToastController,
-    public translateService: TranslateService) {
+    public translateService: TranslateService,
+    public user: User) {
 
     this.translateService.get('LOGIN_ERROR').subscribe((value) => {
       this.loginErrorString = value;
@@ -47,4 +52,47 @@ export class LoginPage {
       toast.present();
     });
   }
+
+  doLoginFacebook() {
+    
+    this.user.loginFacebook()
+      .then((res: FacebookLoginResponse) => {
+       
+
+        this.user.accessFacebookApi()
+          .then((res) => {
+           
+
+            this.account = {
+              username: res.email,
+              password: this.user._userFBId
+            };
+
+            this.doLogin();
+
+          })
+          .catch((err) => {
+            
+
+            this.presentToastMessage('Error login to Facebook');
+
+          })
+
+      })
+      .catch((err) => {
+
+        this.presentToastMessage('Error login to Facebook');
+      })
+
+  }
+
+  presentToastMessage(message) {
+    
+        this.toast = this.toastCtrl.create({
+          message: message,
+          showCloseButton: true,
+          position: 'top'
+        });
+        this.toast.present();
+      }
 }
