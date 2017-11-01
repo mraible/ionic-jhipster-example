@@ -83,68 +83,55 @@ export class SignupPage {
               imageUrl: res.picture.data.url
             };
 
-            console.log('Accessing api! ->' + JSON.stringify(res));
-
             this.user.registerFacebookMobile(this.account)
               .subscribe(
               (res) => {
-
                 this.doLogin(this.user._userFBId);
-
               },
               (err) => {
-                console.log('err fail-->' + JSON.stringify(err));
                 // Unable to sign up
-                this.presentToastMessage('Facebook registry failed');
-
-              }
-              );
+                this.presentToastMessage('Registering with Facebook failed');
+              });
           })
           .catch((err) => {
-            console.log('err fail-->' + JSON.stringify(err));
             // Unable to sign up
-            this.presentToastMessage('Facebook registry failed');
+            this.presentToastMessage('Registering with Facebook failed');
           });
-
       })
       .catch((err) => {
-        console.log('err fail-->' + JSON.stringify(err));
         // Unable to sign up
-        this.presentToastMessage('Facebook registry failed');
+        this.presentToastMessage('Registering with Facebook failed');
       })
-
-
-
   }
 
   doLogin(userId) {
-    
-        this.accountLoginFb = {
-          username: this.account.login,
-          password: userId
-        };
-    
-        this.loginService.login(this.accountLoginFb).then((response) => {
-          console.log('response: ' + response);
-          this.navCtrl.setRoot(MainPage);
-        }, (err) => {
-    
-          console.log('err fail-->' + JSON.stringify(err));
-          // Unable to sign up
-          this.account.password = '';
-          this.presentToastMessage('Facebook registry failed - login fail');
-         
-        });
-      }
+
+    this.accountLoginFb = {
+      username: this.account.login,
+      password: userId
+    };
+
+    this.loginService.login(this.accountLoginFb).then((response) => {
+      console.log('response: ' + response);
+      this.navCtrl.setRoot(MainPage);
+    }, (err) => {
+
+      console.error('err fail-->' + JSON.stringify(err));
+      // Unable to sign up
+      this.account.password = '';
+      this.presentToastMessage('Loging with Facebook failed');
+
+    });
+  }
 
   presentToastMessage(message) {
-    
-        this.toast = this.toastCtrl.create({
-          message: message,
-          showCloseButton: true,
-          position: 'top'
-        });
-        this.toast.present();
-      }
+
+    this.toast = this.toastCtrl.create({
+      message: message,
+      showCloseButton: true,
+      position: 'top'
+    });
+    this.toast.present();
+  }
 
 }

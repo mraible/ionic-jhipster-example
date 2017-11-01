@@ -33,7 +33,7 @@ export class User {
   _user: any;
   _userFBId: any;
 
-  constructor(public api: Api, public loginService: LoginService,private fb: Facebook) { }
+  constructor(public api: Api, public loginService: LoginService, private fb: Facebook) { }
 
   /**
    * Send a POST request to our login endpoint with the data
@@ -82,10 +82,7 @@ export class User {
     return this.fb.login(['public_profile', 'user_friends', 'email'])
       .then((res: FacebookLoginResponse) => {
         this._userFBId = res.authResponse.userID;
-      })
-      .catch(e => {
-        console.log('ERROR: Login FB');
-      })
+      });
 
   }
 
@@ -93,13 +90,10 @@ export class User {
     if(!this._userFBId){
       Promise.reject('Error: Unauthorize to access API. Missing id user');
     }
-
-    return this.fb.api('/' + this._userFBId + '?fields=id,name,gender,email,picture', ['public_profile', 'email']);
-      
+    return this.fb.api('/' + this._userFBId + '?fields=id,name,gender,email,picture', ['public_profile', 'email']);   
   }
 
   registerFacebookMobile(accountInfo: any) {
-    
     return this.api.post('registerFacebookMobile', accountInfo, {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
       responseType: 'text'

@@ -55,10 +55,9 @@ export class MyApp {
 
       const token = this.authServerProvider.getToken();
       
-      if(token){
+      if (token) {
         this.rootPage = MainPage;
-        this.authServerProvider.loginWithToken(token,true);
-       
+        this.authServerProvider.loginWithToken(token,true); 
       }
 
     });
