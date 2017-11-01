@@ -54,7 +54,7 @@ export class MyApp {
       this.splashScreen.hide();
 
       const token = this.authServerProvider.getToken();
-      console.log('token-->'+token);
+      
       if(token){
         this.rootPage = MainPage;
         this.authServerProvider.loginWithToken(token,true);
