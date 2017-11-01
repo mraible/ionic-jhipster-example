@@ -66,13 +66,10 @@ export class SignupPage {
 
 
   doSignUpFacebook() {
-
     this.user.loginFacebook()
       .then((res) => {
-
         this.user.accessFacebookApi()
           .then((res) => {
-
             this.account = {
               login: res.email,
               email: res.email,
@@ -105,27 +102,22 @@ export class SignupPage {
   }
 
   doLogin(userId) {
-
     this.accountLoginFb = {
       username: this.account.login,
       password: userId
     };
-
     this.loginService.login(this.accountLoginFb).then((response) => {
       console.log('response: ' + response);
       this.navCtrl.setRoot(MainPage);
     }, (err) => {
-
       console.error('err fail-->' + JSON.stringify(err));
       // Unable to sign up
       this.account.password = '';
       this.presentToastMessage('Loging with Facebook failed');
-
     });
   }
 
   presentToastMessage(message) {
-
     this.toast = this.toastCtrl.create({
       message: message,
       showCloseButton: true,

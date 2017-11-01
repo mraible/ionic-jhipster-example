@@ -54,43 +54,34 @@ export class LoginPage {
   }
 
   doLoginFacebook() {
-    
     this.user.loginFacebook()
       .then((res: FacebookLoginResponse) => {
-      
         this.user.accessFacebookApi()
           .then((res) => {
-           
             this.account = {
               username: res.email,
               password: this.user._userFBId
             };
             this.doLogin();
-
           })
           .catch((err) => {
-
-            console.error('Error Facebook ->'+ JSON.stringify(err));
+            console.error('Error Facebook ->' + JSON.stringify(err));
             this.presentToastMessage('Error login to Facebook');
-          
           })
       })
       .catch((err) => {
-
-        console.error('Error Facebook ->'+ JSON.stringify(err));
+        console.error('Error Facebook ->' + JSON.stringify(err));
         this.presentToastMessage('Error login to Facebook');
-      
       })
 
   }
 
   presentToastMessage(message) {
-    
-        this.toast = this.toastCtrl.create({
-          message: message,
-          showCloseButton: true,
-          position: 'top'
-        });
-        this.toast.present();
-      }
+    this.toast = this.toastCtrl.create({
+      message: message,
+      showCloseButton: true,
+      position: 'top'
+    });
+    this.toast.present();
+  }
 }
