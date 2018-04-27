@@ -1,6 +1,8 @@
 ## Ionic + JHipster 💥
 
-This repository consists of an example Ionic application that works with JHipster's backend. The only thing that's currently working is JWT authentication. Work on the others will developer with time.
+This repository consists of an example Ionic application that works with JHipster's backend. The only thing that's currently working is JWT authentication. 
+
+**This repo served as an early prototype of what is now [Ionic for JHipster](https://github.com/oktadeveloper/generator-jhipster-ionic). Ionic for JHipster module includes support for entity generation, JWT or OIDC authentication, and testing support.**
 
 To run this example, complete the following steps, run the JHipster backend first.
 
