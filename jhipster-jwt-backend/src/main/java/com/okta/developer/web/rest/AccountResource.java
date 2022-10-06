@@ -65,6 +65,34 @@ public class AccountResource {
         mailService.sendActivationEmail(user);
     }
 
+
+    /**
+       * POST  /register : register the user.
+       *
+       * @param managedUserVM the managed user View Model
+       * @throws InvalidPasswordException 400 (Bad Request) if the password is incorrect
+       * @throws EmailAlreadyUsedException 400 (Bad Request) if the email is already used
+       * @throws LoginAlreadyUsedException 400 (Bad Request) if the login is already used
+       */
+       @PostMapping("/registerFacebookMobile")
+       @Timed
+       @ResponseStatus(HttpStatus.CREATED)
+       public void registerAccountFacebook(@Valid @RequestBody ManagedUserVM managedUserVM) {
+           if (!checkPasswordLength(managedUserVM.getPassword())) {
+               throw new InvalidPasswordException();
+           }
+           userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).ifPresent(u -> {throw new LoginAlreadyUsedException();});
+           userRepository.findOneByEmailIgnoreCase(managedUserVM.getEmail()).ifPresent(u -> {throw new EmailAlreadyUsedException();});
+
+           User user = userService.createUserFacebookFrontend(managedUserVM.getLogin(), managedUserVM.getPassword(),
+                                          managedUserVM.getFirstName(), managedUserVM.getLastName(),
+                                          managedUserVM.getEmail().toLowerCase(), managedUserVM.getImageUrl(),
+                                          managedUserVM.getLangKey());
+
+
+       }
+
+
     /**
     * GET  /activate : activate the registered user.
     *

@@ -251,4 +251,29 @@ public class UserService {
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
+
+    public User createUserFacebookFrontend(String login, String password, String firstName, String lastName, String email,
+    String imageUrl, String langKey) {
+
+    User newUser = new User();
+    Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
+    Set<Authority> authorities = new HashSet<>();
+    String encryptedPassword = passwordEncoder.encode(password);
+    newUser.setLogin(login);
+    // new user gets initially a generated password
+    newUser.setPassword(encryptedPassword);
+    newUser.setFirstName(firstName);
+    newUser.setLastName(lastName);
+    newUser.setEmail(email);
+    newUser.setImageUrl(imageUrl);
+    newUser.setLangKey(langKey);
+    // new user is not active
+    newUser.setActivated(true);
+
+    authorities.add(authority);
+    newUser.setAuthorities(authorities);
+    userRepository.save(newUser);
+    log.debug("Created Information for User: {}", newUser);
+    return newUser;
+}
 }

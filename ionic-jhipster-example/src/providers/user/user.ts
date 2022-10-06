@@ -6,6 +6,8 @@ import { Api } from '../api/api';
 import { LoginService } from '../auth/login.service';
 import { Observable } from 'rxjs/Observable';
 import { HttpHeaders } from '@angular/common/http';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+
 
 /**
  * Most apps have the concept of a User. This is a simple provider
@@ -29,8 +31,9 @@ import { HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class User {
   _user: any;
+  _userFBId: any;
 
-  constructor(public api: Api, public loginService: LoginService) { }
+  constructor(public api: Api, public loginService: LoginService, private fb: Facebook) { }
 
   /**
    * Send a POST request to our login endpoint with the data
@@ -70,5 +73,30 @@ export class User {
    */
   _loggedIn(resp) {
     this._user = resp.user;
+  }
+
+  /**
+   * SignUp with facebook
+   */
+  loginFacebook(): Promise<any> {
+    return this.fb.login(['public_profile', 'user_friends', 'email'])
+      .then((res: FacebookLoginResponse) => {
+        this._userFBId = res.authResponse.userID;
+      });
+
+  }
+
+  accessFacebookApi(): Promise<any> {
+    if(!this._userFBId){
+      Promise.reject('Error: Unauthorize to access API. Missing id user');
+    }
+    return this.fb.api('/' + this._userFBId + '?fields=id,name,gender,email,picture', ['public_profile', 'email']);   
+  }
+
+  registerFacebookMobile(accountInfo: any) {
+    return this.api.post('registerFacebookMobile', accountInfo, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      responseType: 'text'
+    }).share();
   }
 }
